@@ -5,7 +5,6 @@ defmodule Discuss.TopicController do
 
   def index(conn, _params) do
     topics = Repo.all(Topic)
-
     render conn, "index.html", topics: topics
   end
 
@@ -26,7 +25,7 @@ defmodule Discuss.TopicController do
       {:error, changeset} ->
         conn
           |> put_flash(:error, "Your topic wasn't created. Try again.")
-          |>render "new.html", changeset: changeset
+          |>render("new.html", changeset: changeset)
         #render conn, "new.html", changeset: changeset
     end
   end
@@ -50,7 +49,7 @@ defmodule Discuss.TopicController do
       {:error, changeset} ->
         conn
           |> put_flash(:error, "That didn't work. Try again")
-          |> render "edit.html", changeset: changeset, topic: old_topic
+          |> render( "edit.html", changeset: changeset, topic: old_topic)
     end
   end
 

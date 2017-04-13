@@ -7,6 +7,7 @@ defmodule Discuss.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Discuss.Plugs.SetUser
   end
 
   pipeline :api do
@@ -22,7 +23,17 @@ defmodule Discuss.Router do
     # get "/topics/:id/edit", TopicController, :edit
     # put "/topics/:id", TopicController, :update
     # delete "/topic/:id", TopicController, :delete
+    # The above were simply reconfigured to the following:
     resources "/", TopicController
+  end
+
+  scope "/auth", Discuss do
+    pipe_through :browser
+
+    get "/signout", AuthController, :signout
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+
 
   end
 
